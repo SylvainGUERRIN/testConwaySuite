@@ -23,10 +23,21 @@ class ConwaySuite
     public function drawNextLine($line): string
     {
         $compressedLine = $this->removeLineSpaces($line);
+        //if(strlen($compressedLine) > 1 && $compressedLine[0] !== $compressedLine[1]){
+            return $this->drawLineChunks($compressedLine, $this->emptyString);
+        //}
+        //return $this->countConsecutiveLineNumbers($compressedLine);
+    }
+
+    public function drawLineChunks($compressedLine, $chunks): string
+    {
         if(strlen($compressedLine) > 1 && $compressedLine[0] !== $compressedLine[1]){
-            return $this->countConsecutiveLineNumbers("2") . $this->spaceSeparator . $this->countConsecutiveLineNumbers("1");
+            return $this->drawLineChunks(substr($compressedLine, 1),
+                $chunks . $this->countConsecutiveLineNumbers(substr($compressedLine, 0, 1)) . $this->spaceSeparator);
         }
-        return $this->countConsecutiveLineNumbers($compressedLine);
+        return $chunks . $this->countConsecutiveLineNumbers($compressedLine);
+        //return $this->countConsecutiveLineNumbers(substr($compressedLine, 0, 1))
+            //. $this->spaceSeparator . $this->countConsecutiveLineNumbers(substr($compressedLine, 1));
     }
 
     public function removeLineSpaces($line): string
