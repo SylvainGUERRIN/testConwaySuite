@@ -29,8 +29,9 @@ class ConwayTest extends TestCase
 
     public function testShouldDrawSeveralNextLinesOfConwaySuite(): void
     {
-        $this->expectConwaySuite("1", 2,  "1 \n1 1\n2 1");
-
+        $this->expectConwaySuite("1", 2,  "1\n1 1\n2 1");
+        $this->expectConwaySuite("1", 3,  "1\n1 1\n2 1\n1 2 1 1");
+        $this->expectConwaySuite("1 2 1 1", 3,  "1 2 1 1\n1 1 1 2 2 1\n3 1 2 2 1 1\n1 3 1 1 2 2 2 1");
     }
 
     private function expectConwaySuite($line, $deep, $expectedLines): void

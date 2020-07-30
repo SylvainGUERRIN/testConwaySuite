@@ -12,7 +12,31 @@ class ConwaySuite
 
     public function draw($line, $deep): string
     {
-        return $this->drawSourceLine($line) . $this->drawNextLine($line);
+        return $this->drawSourceLine($line) . $this->drawSuite($line, $deep, $this->emptyString);
+    }
+
+    public function drawSuite($line, $deep, $conwaySuite): string
+    {
+        if($deep === 0){
+            return $conwaySuite;
+//            return $conwaySuite . $this->drawNextLine($line);
+        }
+        $nextLine = $this->drawNextLine($line);
+        return $this->drawSuite($nextLine, $deep - 1,
+            $this->accumulateNextLine($conwaySuite, $nextLine));
+//            (empty($conwaySuite) ? $conwaySuite : $conwaySuite . $this->lineJump) . $nextLine);
+//        return $this->drawSuite($nextLine, $deep - 1, $conwaySuite . $this->lineJump . $nextLine);
+        //return $this->drawNextLine($line) . $this->lineJump . $this->drawNextLine($this->drawNextLine($line));
+    }
+
+    public function accumulateNextLine($conwaySuite, $nextLine): string
+    {
+        return $this->prependSuite($conwaySuite). $nextLine;
+    }
+
+    public function prependSuite($conwaySuite)
+    {
+        return empty($conwaySuite) ? $conwaySuite : $conwaySuite . $this->lineJump;
     }
 
     public function drawSourceLine($line): string
